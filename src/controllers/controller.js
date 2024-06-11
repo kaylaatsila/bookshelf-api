@@ -40,6 +40,21 @@ class Controller {
 		return response;
 	}
 
+	static async getBookById(request, h) {
+		const { id } = request.params;
+
+		const isSuccess = books.some((book) => book.id === id);
+
+		const response = h.response({
+			status: isSuccess ? "success" : "fail",
+			data: isSuccess ? { book: books.find((book) => book.id === id) } : undefined,
+			message: isSuccess ? undefined : "Book not found",
+		});
+
+		response.code(isSuccess ? 200 : 404);
+		return response;
+	}
+
 	static async addBook(request, h) {
 		const {
 			name,
